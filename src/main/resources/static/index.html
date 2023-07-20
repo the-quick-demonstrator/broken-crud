@@ -40,17 +40,26 @@
             success: function(response) {
                 alert(JSON.stringify(response));
             },
-            error: function(request, status, error) {
-                console.log("Error while digesting request")
-                console.log("Request value ↓")
-                console.log(request)
-                console.log("Status value ↓")
-                console.log(status);
-                console.log("Error value ↓")
-                console.log(error);                
-            }
+        });
+
+    }
+	    function readAll() {
+        $.ajax({
+            type: "GET",
+            crossDomain: true,
+            headers: {
+                'Accept':'application/json',
+                'Content-Type':'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            url: "/person-controller/readAll",
+            success: function(response) {
+                alert(JSON.stringify(response));
+            },
         });
     }
+
+
 </script>
 
 <form>
