@@ -11,7 +11,9 @@
         }
     }
 
-    function create() {
+    function create(event) {
+    event.preventDefault(); //prevent default form submission
+
         // get the values that are in the input fields
         const personIdElement = document.getElementById("person-id");
         const firstNameElement = document.getElementById("first-name");
@@ -43,33 +45,36 @@
         });
 
     }
-	    function readAll() {
-        $.ajax({
-            type: "GET",
-            crossDomain: true,
-            headers: {
-                'Accept':'application/json',
-                'Content-Type':'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            url: "/person-controller/readAll",
-            success: function(response) {
-                alert(JSON.stringify(response));
-            },
-        });
+  async function readAll(event) {
+        event.preventDefault(); // Prevent the default form submission
+
+        try {
+            const response = await $.ajax({
+                type: "GET",
+                crossDomain: true,
+                headers: {
+                    'Accept':'application/json',
+                    'Content-Type':'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                url: "/person-controller/readAll",
+            });
+            alert(JSON.stringify(response));
+        } catch (error) {
+            alert("An error occurred during the readAll request.");
+        }
+
+        // Refresh the page or execute other code after the request is completed
     }
-
-
 </script>
 
 <form>
-    <input id="person-id"> - ID</br>
-    <input id="first-name"> - FirstName</br>
-    <input id="last-name"> - LastName</br>
+    <input id="person-id"> - ID<br>
+    <input id="first-name"> - FirstName<br>
+    <input id="last-name"> - LastName<br>
     <button onClick="create(event)">Create</button>
     <button onClick="read()">Read</button>
-    <button onClick="readAll()">Read All</button>
+    <button onClick="readAll(event)">Read All</button>
     <button onClick="update()">Update</button>
     <button onClick="delete()">Delete</button>
 </form>
-
